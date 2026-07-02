@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peixe-Boi Brasil — Conservação Aquática</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --bg: #FBF8F1;
+    --ink: #17302B;
+    --ink-soft: #3E5A54;
+    --teal-deep: #0E3B36;
+    --teal: #1B5E56;
+    --aqua: #63B9A6;
+    --aqua-pale: #CDE9E0;
+    --sand: #EFE3CB;
+    --coral: #E28F5B;
+    --coral-deep: #C96F3E;
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Public Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img,svg{ display:block; max-width:100%; }
+  a{ color: inherit; }
+  button{ font-family: inherit; cursor:pointer; }
+
+  .eyebrow{
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--aqua);
+    display:flex;
+    align-items:center;
+    gap:0.6em;
+  }
+  .eyebrow::before{
+    content:"";
+    width: 1.4em;
+    height: 1px;
+    background: var(--aqua);
+  }
+
+  /* ---------- NAV ---------- */
+  .topnav{
+    position: sticky;
+    top:0;
+    z-index: 40;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 1.1rem clamp(1.2rem, 4vw, 3rem);
+    background: rgba(251,248,241,0.86);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(23,48,43,0.08);
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:0.6rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+    text-decoration:none;
+    color: var(--teal-deep);
+    background:none;
+    border:none;
+    padding:0;
+  }
+  .brand svg{ width: 34px; height: 34px; }
+
+  .back-btn{
+    display:inline-flex;
+    align-items:center;
+    gap: 0.5em;
+    background: transparent;
+    border: 1px solid rgba(23,48,43,0.18);
+    color: var(--teal-deep);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.55em 1.1em 0.55em 0.85em;
+    border-radius: 999px;
+    transition: background .18s ease, border-color .18s ease, transform .18s ease;
+  }
+  .back-btn:hover{ background: var(--aqua-pale); border-color: var(--aqua); transform: translateX(-2px); }
+  .back-btn:focus-visible, button:focus-visible, .topic-card:focus-visible{
+    outline: 2px solid var(--coral);
+    outline-offset: 3px;
+  }
+
+  main{ max-width: 1080px; margin: 0 auto; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    background: linear-gradient(180deg, var(--teal-deep) 0%, var(--teal) 100%);
+    color: var(--sand);
+    padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.2rem, 5vw, 3rem) 0;
+    overflow: hidden;
+  }
+  .hero-inner{ max-width: 1080px; margin: 0 auto; padding-bottom: 2.5rem; }
+  .hero .eyebrow{ color: var(--aqua); margin-bottom: 1.1rem; }
+  .hero .eyebrow::before{ background: var(--aqua); }
+  h1{
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.1rem;
+    max-width: 14ch;
+    color: #FBF8F1;
+  }
+  .hero p.lede{
+    font-size: clamp(1rem, 1.6vw, 1.18rem);
+    max-width: 46ch;
+    color: rgba(251,248,241,0.82);
+    margin: 0;
+  }
+
+  .lagoon{
+    position: relative;
+    height: clamp(120px, 22vw, 200px);
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  .lagoon svg{ width: 100%; height: 100%; }
+  .manatee-drift{
+    position: absolute;
+    top: 18%;
+    left: 0;
+    width: 190px;
+    animation: drift 22s linear infinite;
+  }
+  @keyframes drift{
+    0%   { transform: translateX(-220px) translateY(0) scaleX(1); }
+    48%  { transform: translateX(calc(100vw)) translateY(-6px) scaleX(1); }
+    50%  { transform: translateX(calc(100vw)) translateY(-6px) scaleX(-1); }
+    98%  { transform: translateX(-220px) translateY(0) scaleX(-1); }
+    100% { transform: translateX(-220px) translateY(0) scaleX(1); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .manatee-drift{ animation: none; left: 8%; }
+    html{ scroll-behavior:auto; }
+  }
+  .wave-edge{
+    position:absolute; left:0; right:0; bottom:-1px; line-height:0;
+  }
+  .wave-edge svg{ width:100%; height: 46px; display:block; }
+
+  /* ---------- TOPIC GRID (home) ---------- */
+  .section-label{
+    padding: 3rem clamp(1.2rem, 5vw, 3rem) 0.5rem;
+  }
+  .section-label h2{
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-weight: 600;
+    margin: 0.5rem 0 0;
+    color: var(--teal-deep);
+  }
+
+  .topic-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 1.1rem;
+    padding: 1rem clamp(1.2rem, 5vw, 3rem) 4rem;
+  }
+  .topic-card{
+    text-align:left;
+    background: #fff;
+    border: 1px solid rgba(23,48,43,0.09);
+    border-radius: 22px;
+    padding: 1.6rem 1.4rem 1.7rem;
+    display:flex;
+    flex-direction:column;
+    gap: 1rem;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    box-shadow: 0 1px 2px rgba(23,48,43,0.04);
+  }
+  .topic-card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px -12px rgba(14,59,54,0.28);
+    border-color: var(--aqua);
+  }
+  .blob{
+    width: 54px; height: 54px;
+    border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .blob svg{ width: 26px; height: 26px; }
+  .topic-card h3{
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--teal-deep);
+  }
+  .topic-card p{
+    margin:0;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+  }
+  .card-cta{
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--coral-deep);
+    display:flex; align-items:center; gap:0.4em;
+    margin-top: auto;
+  }
+  .card-cta svg{ width: 13px; height: 13px; transition: transform .18s ease; }
+  .topic-card:hover .card-cta svg{ transform: translateX(3px); }
+
+  /* palette rotation per card */
+  .topic-card:nth-of-type(1) .blob{ background: var(--aqua-pale); }
+  .topic-card:nth-of-type(1) .blob svg{ stroke: var(--teal); }
+  .topic-card:nth-of-type(2) .blob{ background: var(--sand); }
+  .topic-card:nth-of-type(2) .blob svg{ stroke: var(--coral-deep); }
+  .topic-card:nth-of-type(3) .blob{ background: #F3DCC9; }
+  .topic-card:nth-of-type(3) .blob svg{ stroke: var(--coral-deep); }
+  .topic-card:nth-of-type(4) .blob{ background: var(--aqua-pale); }
+  .topic-card:nth-of-type(4) .blob svg{ stroke: var(--teal); }
+  .topic-card:nth-of-type(5) .blob{ background: var(--sand); }
+  .topic-card:nth-of-type(5) .blob svg{ stroke: var(--coral-deep); }
+
+  /* ---------- TOPIC PAGES ---------- */
+  .topic-page{ display:none; }
+  .topic-page.active{ display:block; }
+  .view-home{ display:none; }
+  .view-home.active{ display:block; }
+
+  .topic-hero{
+    padding: 2.6rem clamp(1.2rem, 5vw, 3rem) 1rem;
+  }
+  .topic-hero h1{
+    color: var(--teal-deep);
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    max-width: 22ch;
+  }
+  .topic-hero .eyebrow{ color: var(--coral-deep); }
+  .topic-hero .eyebrow::before{ background: var(--coral-deep); }
+
+  .stat-strip{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 0.6rem;
+    padding: 0 clamp(1.2rem, 5vw, 3rem);
+    margin-bottom: 1.5rem;
+  }
+  .stat{
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    background: var(--aqua-pale);
+    color: var(--teal-deep);
+    padding: 0.5em 0.9em;
+    border-radius: 999px;
+  }
+
+  .topic-body{
+    padding: 0.5rem clamp(1.2rem, 5vw, 3rem) 4rem;
+    max-width: 760px;
+  }
+  .topic-body section{ margin-bottom: 2.1rem; }
+  .topic-body h2{
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--teal-deep);
+    margin: 0 0 0.6rem;
+  }
+  .topic-body p{ margin: 0 0 0.9rem; color: var(--ink); }
+  .topic-body ul{ margin: 0 0 0.9rem; padding-left: 1.2rem; }
+  .topic-body li{ margin-bottom: 0.45rem; }
+  .callout{
+    background: var(--sand);
+    border-left: 3px solid var(--coral);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    font-size: 0.94rem;
+    color: var(--ink);
+  }
+  .callout strong{ color: var(--coral-deep); }
+
+  /* ---------- FORM (cadastro) ---------- */
+  .form-card{
+    background: #fff;
+    border: 1px solid rgba(23,48,43,0.09);
+    border-radius: 22px;
+    padding: clamp(1.4rem, 3vw, 2rem);
+    margin: 0 clamp(1.2rem, 5vw, 3rem) 2.5rem;
+    max-width: 640px;
+  }
+  .form-note{
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    background: var(--aqua-pale);
+    border-radius: 10px;
+    padding: 0.8em 1em;
+    margin-bottom: 1.4rem;
+  }
+  .field{ margin-bottom: 1.1rem; }
+  .field label{
+    display:block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--teal-deep);
+    margin-bottom: 0.4rem;
+  }
+  .field .hint{ font-weight:400; color: var(--ink-soft); font-size: 0.78rem; }
+  .field input, .field select, .field textarea{
+    width:100%;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    padding: 0.7em 0.85em;
+    border-radius: 10px;
+    border: 1px solid rgba(23,48,43,0.2);
+    background: var(--bg);
+    color: var(--ink);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline: 2px solid var(--aqua);
+    outline-offset: 1px;
+    border-color: var(--aqua);
+  }
+  .field textarea{ resize: vertical; min-height: 80px; }
+  .row-2{ display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 520px){ .row-2{ grid-template-columns: 1fr; } }
+
+  .submit-btn{
+    background: var(--coral);
+    color: #fff;
+    border: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.85em 1.6em;
+    border-radius: 999px;
+    transition: background .18s ease, transform .18s ease;
+  }
+  .submit-btn:hover{ background: var(--coral-deep); transform: translateY(-1px); }
+
+  .confirm-msg{
+    display:none;
+    margin-top: 1rem;
+    font-size: 0.88rem;
+    color: var(--teal-deep);
+    background: var(--aqua-pale);
+    padding: 0.7em 1em;
+    border-radius: 10px;
+  }
+  .confirm-msg.show{ display:block; }
+
+  .registry{
+    padding: 0 clamp(1.2rem, 5vw, 3rem) 4rem;
+  }
+  .registry h2{
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--teal-deep);
+    margin-bottom: 1rem;
+  }
+  .registry-list{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+    gap: 0.9rem;
+  }
+  .registry-item{
+    background: #fff;
+    border: 1px solid rgba(23,48,43,0.09);
+    border-radius: 16px;
+    padding: 1rem 1.1rem;
+  }
+  .registry-item h4{
+    margin: 0 0 0.3rem;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--teal-deep);
+  }
+  .registry-item .meta{
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--coral-deep);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+  }
+  .registry-item p{ margin:0; font-size: 0.85rem; color: var(--ink-soft); }
+  .registry-empty{
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+  .registry-loading{ font-size: 0.85rem; color: var(--ink-soft); }
+
+  footer{
+    text-align:center;
+    padding: 2rem 1.2rem 2.6rem;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <button class="brand" onclick="goHome()" aria-label="Ir para a página inicial">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="20" cy="21" rx="14" ry="9" fill="#63B9A6"/>
+      <path d="M6 21c-3 0-5 2-5 4s2 3 5 2z" fill="#63B9A6"/>
+      <circle cx="10" cy="19" r="1.3" fill="#0E3B36"/>
+    </svg>
+    Peixe-Boi Brasil
+  </button>
+  <button class="back-btn" id="navBackBtn" onclick="goHome()" style="display:none;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    Voltar
+  </button>
+</nav>
+
+<main>
+
+  <!-- ================= HOME ================= -->
+  <div class="view-home active" id="view-home">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="eyebrow">Conservação aquática</div>
+        <h1>O gigante manso das águas brasileiras</h1>
+        <p class="lede">Um mamífero herbívoro, lento e curioso, que divide rios, mares e manguezais com a gente. Conheça sua história, seu corpo e os desafios que enfrenta para sobreviver.</p>
+      </div>
+      <div class="lagoon" aria-hidden="true">
+        <svg viewBox="0 0 800 200" preserveAspectRatio="none">
+          <path d="M0 60 Q 100 40 200 60 T 400 60 T 600 60 T 800 60" stroke="#63B9A6" stroke-width="2" fill="none" opacity="0.35"/>
+          <path d="M0 90 Q 100 70 200 90 T 400 90 T 600 90 T 800 90" stroke="#63B9A6" stroke-width="2" fill="none" opacity="0.22"/>
+          <path d="M0 120 Q 100 100 200 120 T 400 120 T 600 120 T 800 120" stroke="#63B9A6" stroke-width="2" fill="none" opacity="0.15"/>
+        </svg>
+        <svg class="manatee-drift" viewBox="0 0 200 90" aria-hidden="true">
+          <ellipse cx="95" cy="46" rx="70" ry="34" fill="#4A9184"/>
+          <path d="M20 46 C -6 46 -14 60 -12 70 C -10 80 8 78 26 62 Z" fill="#4A9184"/>
+          <ellipse cx="60" cy="66" rx="12" ry="7" fill="#3E7A6F" transform="rotate(20 60 66)"/>
+          <ellipse cx="120" cy="68" rx="12" ry="7" fill="#3E7A6F" transform="rotate(-15 120 68)"/>
+          <circle cx="34" cy="40" r="2.4" fill="#0E3B36"/>
+        </svg>
+      </div>
+      <div class="wave-edge">
+        <svg viewBox="0 0 800 46" preserveAspectRatio="none">
+          <path d="M0 20 Q 200 46 400 20 T 800 20 V46 H0 Z" fill="#FBF8F1"/>
+        </svg>
+      </div>
+    </section>
+
+    <div class="section-label">
+      <div class="eyebrow" style="color:var(--coral-deep);">Explore</div>
+      <h2>Cinco caminhos para conhecer o peixe-boi</h2>
+    </div>
+
+    <div class="topic-grid">
+
+      <button class="topic-card" onclick="goTo('informativos')">
+        <div class="blob"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5c3 0 5 1 5 1v13s-2-1-5-1-5 1-5 1V6s2-1 5-1z" transform="translate(1)"/><path d="M14 6s2-1 5-1 5 1 5 1v13s-2-1-5-1-5 1-5 1V6z"/><path d="M14 6V19"/></svg></div>
+        <h3>Informativos do peixe-boi</h3>
+        <p>Espécies, tamanho, hábitos e curiosidades sobre esse animal.</p>
+        <span class="card-cta">Ler mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
+
+      <button class="topic-card" onclick="goTo('anatomia')">
+        <div class="blob"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="12" rx="9" ry="6"/><circle cx="12" cy="12" r="2"/><path d="M3 12h2M19 12h2"/></svg></div>
+        <h3>Anatomia do peixe-boi</h3>
+        <p>Como é feito por dentro o corpo desse gigante aquático.</p>
+        <span class="card-cta">Ler mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
+
+      <button class="topic-card" onclick="goTo('sobrevivencia')">
+        <div class="blob"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.35-9.5-9C1 8 3 4 7 4c2 0 4 1.5 5 3 1-1.5 3-3 5-3 4 0 6 4 4.5 8-2.5 4.65-9.5 9-9.5 9z"/></svg></div>
+        <h3>Sobrevivência do peixe-boi</h3>
+        <p>As ameaças reais que ele enfrenta e o que está sendo feito.</p>
+        <span class="card-cta">Ler mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
+
+      <button class="topic-card" onclick="goTo('proteses')">
+        <div class="blob"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v4M15 3v4M6 7h12l-1 5c-1 4-3 6-5 6s-4-2-5-6z"/><path d="M9 18v3M15 18v3"/></svg></div>
+        <h3>Próteses</h3>
+        <p>Cuidado veterinário e recuperação de animais feridos.</p>
+        <span class="card-cta">Ler mais <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
+
+      <button class="topic-card" onclick="goTo('cadastrar')">
+        <div class="blob"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></div>
+        <h3>Cadastrar peixe-boi</h3>
+        <p>Registre um avistamento, resgate ou indivíduo conhecido.</p>
+        <span class="card-cta">Cadastrar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </button>
+
+    </div>
+
+    <footer>Feito para quem se importa com os rios e mares do Brasil. 🌊</footer>
+  </div>
+
+  <!-- ================= TOPIC 1: INFORMATIVOS ================= -->
+  <div class="topic-page" id="view-informativos">
+    <div class="topic-hero">
+      <div class="eyebrow">Informativos</div>
+      <h1>Quem é o peixe-boi</h1>
+    </div>
+    <div class="stat-strip">
+      <span class="stat">até 4 m de comprimento</span>
+      <span class="stat">até 500 kg</span>
+      <span class="stat">40–60 anos de vida</span>
+      <span class="stat">100% herbívoro</span>
+    </div>
+    <div class="topic-body">
+      <section>
+        <h2>Uma família pequena e antiga</h2>
+        <p>O peixe-boi pertence ao grupo dos sirênios, junto com o dugongo. Existem três espécies vivas: o peixe-boi-marinho, que vive no litoral do Nordeste brasileiro e em outras partes do Atlântico; o peixe-boi-da-Amazônia, exclusivo dos rios de água doce da bacia amazônica; e o peixe-boi-africano, que ocupa rios e costas da África Ocidental.</p>
+        <p>Apesar do nome, o parente vivo mais próximo do peixe-boi não é nenhum outro animal aquático — é o elefante. Os dois descendem de um mesmo grupo ancestral de mamíferos terrestres que, em algum momento da evolução, seguiu caminhos completamente diferentes.</p>
+      </section>
+      <section>
+        <h2>Uma vida devagar</h2>
+        <p>O peixe-boi passa a maior parte do dia comendo capim marinho, algas e outras plantas aquáticas, chegando a consumir o equivalente a 10% do próprio peso em vegetação por dia. Entre uma refeição e outra, descansa flutuando quase imóvel — um ritmo tão lento que rendeu a ele o apelido carinhoso de "boi das águas".</p>
+        <p>Vive em águas rasas e mornas: estuários, manguezais, baías e trechos calmos de rios, sempre perto de áreas com vegetação aquática abundante e água doce para beber.</p>
+      </section>
+      <div class="callout"><strong>Curiosidade:</strong> um peixe-boi adulto não tem predadores naturais. A única ameaça séria que ele enfrenta ao longo da vida vem das atividades humanas.</div>
+    </div>
+  </div>
+
+  <!-- ================= TOPIC 2: ANATOMIA ================= -->
+  <div class="topic-page" id="view-anatomia">
+    <div class="topic-hero">
+      <div class="eyebrow">Anatomia</div>
+      <h1>Um corpo desenhado para a água</h1>
+    </div>
+    <div class="stat-strip">
+      <span class="stat">pele de 2–5 cm de espessura</span>
+      <span class="stat">dentes que "andam" na boca</span>
+      <span class="stat">pulmões do tamanho do tronco</span>
+    </div>
+    <div class="topic-body">
+      <section>
+        <h2>Forma e pele</h2>
+        <p>O corpo do peixe-boi é robusto, arredondado e sem pescoço definido — a cabeça se funde direto ao tronco. A pele é grossa, enrugada e coberta por pelos curtos e esparsos (vibrissas), sensíveis a estímulos, distribuídos por todo o corpo, o que ajuda o animal a perceber correntes e obstáculos na água turva.</p>
+      </section>
+      <section>
+        <h2>Nadadeiras e cauda</h2>
+        <p>Os membros dianteiros se transformaram em nadadeiras (flippers), com unhas vestigiais na ponta. Não existem membros traseiros: no lugar deles, uma cauda larga e achatada em forma de pá é o principal motor de propulsão, movida de cima para baixo em um nado ondulante e lento.</p>
+      </section>
+      <section>
+        <h2>Respiração e flutuação</h2>
+        <p>Os pulmões ocupam quase todo o comprimento do tronco e funcionam quase como um colete regulador de flutuabilidade: ao controlar o volume de ar neles, o peixe-boi ajusta a profundidade em que flutua sem gastar energia nadando. Ele precisa subir à superfície para respirar a cada poucos minutos, mesmo dormindo.</p>
+      </section>
+      <section>
+        <h2>Boca e dentes</h2>
+        <p>O lábio superior é dividido em duas metades independentes e extremamente móveis, usadas quase como uma mão para segurar e levar plantas até a boca. Os dentes molares nascem sempre na parte de trás da arcada e vão se deslocando lentamente para frente ao longo da vida, substituindo os dentes desgastados pela dieta abrasiva — uma adaptação rara entre os mamíferos, chamada dentição marchante.</p>
+      </section>
+    </div>
+  </div>
+
+  <!-- ================= TOPIC 3: SOBREVIVENCIA ================= -->
+  <div class="topic-page" id="view-sobrevivencia">
+    <div class="topic-hero">
+      <div class="eyebrow">Sobrevivência</div>
+      <h1>Uma espécie vulnerável</h1>
+    </div>
+    <div class="stat-strip">
+      <span class="stat">1 filhote a cada 3–5 anos</span>
+      <span class="stat">gestação de ~12 meses</span>
+      <span class="stat">status: vulnerável / ameaçado</span>
+    </div>
+    <div class="topic-body">
+      <section>
+        <h2>As principais ameaças</h2>
+        <ul>
+          <li><strong>Colisões com embarcações</strong> — hélices de barcos causam ferimentos graves na pele, nas nadadeiras e na cauda, muitas vezes fatais.</li>
+          <li><strong>Emalhamento em redes de pesca</strong> — o animal pode ficar preso e se afogar por não conseguir subir para respirar.</li>
+          <li><strong>Caça histórica</strong> — no passado, era caçado por carne, óleo e couro; hoje a prática é proibida por lei, mas casos pontuais ainda ocorrem.</li>
+          <li><strong>Perda de habitat</strong> — degradação de manguezais, estuários e pastos de capim marinho por poluição e ocupação da costa.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Por que a recuperação é lenta</h2>
+        <p>Fêmeas geram apenas um filhote por gestação, que dura cerca de doze a catorze meses, e costumam esperar de três a cinco anos entre um nascimento e outro. Esse ritmo reprodutivo lento significa que, quando uma população é reduzida, ela demora décadas para se recuperar — por isso cada indivíduo perdido pesa tanto para a espécie.</p>
+      </section>
+      <section>
+        <h2>O que está sendo feito</h2>
+        <p>Projetos de conservação no Brasil, como o trabalho conduzido pelo ICMBio no litoral nordestino, combinam monitoramento de populações, reabilitação de filhotes órfãos ou feridos, soltura de animais recuperados, sinalização de áreas de baixa velocidade para embarcações e educação ambiental em comunidades costeiras e ribeirinhas.</p>
+      </section>
+    </div>
+  </div>
+
+  <!-- ================= TOPIC 4: PROTESES ================= -->
+  <div class="topic-page" id="view-proteses">
+    <div class="topic-hero">
+      <div class="eyebrow">Cuidado veterinário</div>
+      <h1>Próteses e recuperação</h1>
+    </div>
+    <div class="stat-strip">
+      <span class="stat">dispositivos de flutuação</span>
+      <span class="stat">curativos e talas</span>
+      <span class="stat">objetivo: soltura</span>
+    </div>
+    <div class="topic-body">
+      <section>
+        <h2>Quando um peixe-boi chega ferido</h2>
+        <p>A maioria dos peixes-bois resgatados chega a centros de reabilitação com ferimentos causados por colisões com hélices de barco, geralmente nas nadadeiras, na cauda ou no dorso. O tratamento começa com limpeza e curativo das feridas, antibióticos e uma dieta controlada em tanques adaptados para a recuperação.</p>
+      </section>
+      <section>
+        <h2>Dispositivos auxiliares, não próteses robóticas</h2>
+        <p>Diferente de golfinhos ou tartarugas famosos que ganharam próteses robóticas de cauda ou nadadeira, o peixe-boi raramente recebe esse tipo de equipamento — seu corpo sem membros traseiros e sua forma arredondada tornam esse tipo de solução muito mais difícil de aplicar. Em vez disso, os cuidados costumam envolver coletes e flutuadores, que sustentam o animal na água enquanto o ferimento cicatriza, e talas temporárias para imobilizar uma nadadeira lesionada.</p>
+      </section>
+      <div class="callout"><strong>Importante:</strong> esses dispositivos são sempre temporários. O objetivo de toda reabilitação é devolver o animal à natureza assim que ele recuperar mobilidade e saúde suficientes para viver sozinho.</div>
+      <section>
+        <h2>Um campo em desenvolvimento</h2>
+        <p>A bioengenharia veterinária vem estudando soluções assistivas mais avançadas para casos graves de amputação em animais aquáticos, inspiradas em próteses já usadas em outras espécies. Para o peixe-boi, esse ainda é um campo em construção, mais experimental do que rotineiro.</p>
+      </section>
+    </div>
+  </div>
+
+  <!-- ================= TOPIC 5: CADASTRAR ================= -->
+  <div class="topic-page" id="view-cadastrar">
+    <div class="topic-hero">
+      <div class="eyebrow">Ciência cidadã</div>
+      <h1>Cadastrar um peixe-boi</h1>
+    </div>
+    <div class="topic-body" style="max-width:none;">
+      <p style="max-width:640px;">Viu um peixe-boi, participou de um resgate ou conhece um indivíduo já identificado? Registre aqui. Cada cadastro ajuda pesquisadores e centros de conservação a acompanhar essa espécie.</p>
+    </div>
+
+    <div class="form-card">
+      <div class="form-note">Os dados enviados aqui ficam visíveis para todas as pessoas que usarem este site — é um registro coletivo, como um mural de avistamentos.</div>
+      <form id="cadastroForm">
+        <div class="field">
+          <label for="f-nome">Nome ou apelido do peixe-boi <span class="hint">(opcional)</span></label>
+          <input type="text" id="f-nome" placeholder="Ex.: Tuim, ou deixe em branco">
+        </div>
+        <div class="row-2">
+          <div class="field">
+            <label for="f-especie">Espécie</label>
+            <select id="f-especie">
+              <option value="Peixe-boi-marinho">Peixe-boi-marinho</option>
+              <option value="Peixe-boi-da-Amazônia">Peixe-boi-da-Amazônia</option>
+              <option value="Não sei identificar">Não sei identificar</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-situacao">Situação</label>
+            <select id="f-situacao">
+              <option value="Avistamento saudável">Avistamento saudável</option>
+              <option value="Ferido">Ferido</option>
+              <option value="Resgatado">Resgatado</option>
+              <option value="Filhote órfão">Filhote órfão</option>
+            </select>
+          </div>
+        </div>
+        <div class="row-2">
+          <div class="field">
+            <label for="f-local">Local</label>
+            <input type="text" id="f-local" placeholder="Ex.: Estuário do Rio Formoso, PE" required>
+          </div>
+          <div class="field">
+            <label for="f-data">Data</label>
+            <input type="date" id="f-data" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-obs">Observações <span class="hint">(opcional)</span></label>
+          <textarea id="f-obs" placeholder="Detalhes do que você viu..."></textarea>
+        </div>
+        <div class="field">
+          <label for="f-observador">Seu nome <span class="hint">(opcional)</span></label>
+          <input type="text" id="f-observador" placeholder="Como quer ser identificado no registro">
+        </div>
+        <button type="submit" class="submit-btn">Cadastrar peixe-boi</button>
+        <div class="confirm-msg" id="confirmMsg">Cadastro enviado! Obrigado por ajudar a proteger o peixe-boi. 🌿</div>
+      </form>
+    </div>
+
+    <div class="registry">
+      <h2>Peixe-bois já cadastrados</h2>
+      <div id="registryList"><p class="registry-loading">Carregando registros...</p></div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const views = ['informativos','anatomia','sobrevivencia','proteses','cadastrar'];
+
+  function goTo(id){
+    document.getElementById('view-home').classList.remove('active');
+    views.forEach(v => document.getElementById('view-'+v).classList.remove('active'));
+    document.getElementById('view-'+id).classList.add('active');
+    document.getElementById('navBackBtn').style.display = 'inline-flex';
+    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+    location.hash = id;
+    if(id === 'cadastrar'){ renderRegistry(); }
+  }
+
+  function goHome(){
+    views.forEach(v => document.getElementById('view-'+v).classList.remove('active'));
+    document.getElementById('view-home').classList.add('active');
+    document.getElementById('navBackBtn').style.display = 'none';
+    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+    history.replaceState(null, '', location.pathname);
+  }
+
+  window.addEventListener('hashchange', () => {
+    const h = location.hash.replace('#','');
+    if(views.includes(h)) goTo(h); else goHome();
+  });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const h = location.hash.replace('#','');
+    if(views.includes(h)) goTo(h);
+  });
+
+  // ---------- storage-backed registry ----------
+  const STORAGE_KEY = 'cadastros-list';
+
+  async function loadCadastros(){
+    try{
+      const res = await window.storage.get(STORAGE_KEY, true);
+      return res && res.value ? JSON.parse(res.value) : [];
+    }catch(e){
+      return [];
+    }
+  }
+
+  async function saveCadastros(list){
+    try{
+      await window.storage.set(STORAGE_KEY, JSON.stringify(list), true);
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str || '';
+    return d.innerHTML;
+  }
+
+  async function renderRegistry(){
+    const el = document.getElementById('registryList');
+    el.innerHTML = '<p class="registry-loading">Carregando registros...</p>';
+    const list = await loadCadastros();
+    if(!list.length){
+      el.innerHTML = '<p class="registry-empty">Nenhum peixe-boi cadastrado ainda. Seja a primeira pessoa a registrar um avistamento.</p>';
+      return;
+    }
+    const sorted = list.slice().sort((a,b) => (b.criadoEm||0) - (a.criadoEm||0));
+    el.innerHTML = '<div class="registry-list">' + sorted.map(item => `
+      <div class="registry-item">
+        <div class="meta">${escapeHtml(item.situacao)}</div>
+        <h4>${escapeHtml(item.nome) || 'Sem apelido'}</h4>
+        <p>${escapeHtml(item.especie)} • ${escapeHtml(item.local)}${item.data ? ' • ' + escapeHtml(item.data) : ''}</p>
+        ${item.obs ? `<p style="margin-top:0.4rem;">${escapeHtml(item.obs)}</p>` : ''}
+        ${item.observador ? `<p style="margin-top:0.4rem;font-style:italic;">registrado por ${escapeHtml(item.observador)}</p>` : ''}
+      </div>
+    `).join('') + '</div>';
+  }
+
+  document.getElementById('cadastroForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('.submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    const entry = {
+      nome: document.getElementById('f-nome').value.trim(),
+      especie: document.getElementById('f-especie').value,
+      situacao: document.getElementById('f-situacao').value,
+      local: document.getElementById('f-local').value.trim(),
+      data: document.getElementById('f-data').value,
+      obs: document.getElementById('f-obs').value.trim(),
+      observador: document.getElementById('f-observador').value.trim(),
+      criadoEm: Date.now()
+    };
+
+    const list = await loadCadastros();
+    list.push(entry);
+    const ok = await saveCadastros(list);
+
+    btn.disabled = false;
+    btn.textContent = 'Cadastrar peixe-boi';
+
+    const msg = document.getElementById('confirmMsg');
+    msg.textContent = ok
+      ? 'Cadastro enviado! Obrigado por ajudar a proteger o peixe-boi. 🌿'
+      : 'Não foi possível salvar agora. Tente novamente em instantes.';
+    msg.classList.add('show');
+    setTimeout(() => msg.classList.remove('show'), 5000);
+
+    if(ok){
+      e.target.reset();
+      renderRegistry();
+    }
+  });
+</script>
+
+</body>
+</html>
