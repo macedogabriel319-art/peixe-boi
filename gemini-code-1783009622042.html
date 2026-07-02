@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto Peixe-Boi</title>
+    <style>
+        /* Estilos do Site (CSS) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e0f7fa; /* Azul clarinho lembrando a água */
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #006064;
+        }
+
+        /* Container que guarda as páginas */
+        .page {
+            display: none; /* Esconde todas as páginas por padrão */
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* A classe active mostra a página atual */
+        .active {
+            display: block;
+        }
+
+        /* Menu de botões */
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            background-color: #00838f;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #005662;
+        }
+
+        .back-btn {
+            background-color: #ff9800;
+            margin-top: 20px;
+        }
+
+        .back-btn:hover {
+            background-color: #e65100;
+        }
+
+        /* Estilos do Formulário */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 500px;
+            margin: 20px auto;
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+            color: #006064;
+        }
+
+        input, textarea, select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .success-msg {
+            color: #2e7d32;
+            background-color: #c8e6c9;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="home" class="page active">
+        <h1>Santuário do Peixe-Boi</h1>
+        <p>Bem-vindo ao portal de estudos e preservação dos peixes-bois. Escolha um tópico abaixo para aprender mais ou registrar um animal.</p>
+        
+        <div class="menu-container">
+            <button onclick="mudarPagina('informativos')">Informativos do peixe-boi</button>
+            <button onclick="mudarPagina('anatomia')">Anatomia do peixe-boi</button>
+            <button onclick="mudarPagina('sobrevivencia')">Sobrevivência do peixe-boi</button>
+            <button onclick="mudarPagina('proteses')">Próteses</button>
+            <button onclick="mudarPagina('cadastrar')">Cadastrar peixe-boi</button>
+        </div>
+    </div>
+
+    <div id="informativos" class="page">
+        <h2>Informativos do Peixe-Boi</h2>
+        <p>Os peixes-bois são mamíferos aquáticos dóceis e herbívoros, conhecidos como "vacas marinhas". Eles podem pesar até 600 kg e medir cerca de 3 metros de comprimento. Existem três espécies principais: o peixe-boi-da-amazônia, o peixe-boi-marinho e o peixe-boi-africano.</p>
+        <button class="back-btn" onclick="mudarPagina('home')">Voltar para o Início</button>
+    </div>
+
+    <div id="anatomia" class="page">
+        <h2>Anatomia do Peixe-Boi</h2>
+        <p>Apesar de viverem na água, os peixes-bois precisam ir à superfície para respirar a cada 3 a 5 minutos. Eles possuem uma cauda grande e achatada que os ajuda a nadar, e duas nadadeiras peitorais que usam para se direcionar e até para "segurar" alimentos perto da boca. Sua pele é grossa e rugosa, geralmente em tons de cinza ou marrom.</p>
+        <button class="back-btn" onclick="mudarPagina('home')">Voltar para o Início</button>
+    </div>
+
+    <div id="sobrevivencia" class="page">
+        <h2>Sobrevivência do Peixe-Boi</h2>
+        <p>Infelizmente, os peixes-bois estão ameaçados de extinção. Suas principais ameaças incluem a caça ilegal, poluição das águas, destruição do seu habitat natural e, principalmente, colisões com barcos a motor. Projetos de conservação são vitais para garantir que esses animais continuem nadando em nossos rios e mares.</p>
+        <button class="back-btn" onclick="mudarPagina('home')">Voltar para o Início</button>
+    </div>
+
+    <div id="proteses" class="page">
+        <h2>Próteses para Peixes-Bois</h2>
+        <p>Em casos de acidentes graves (como cortes por hélices de barcos), alguns peixes-bois podem perder parte da cauda, o que prejudica severamente sua capacidade de nadar e sobreviver. Pesquisadores e veterinários têm desenvolvido próteses de cauda feitas de materiais leves e resistentes, ajudando animais resgatados a recuperarem sua mobilidade e qualidade de vida em cativeiro.</p>
+        <button class="back-btn" onclick="mudarPagina('home')">Voltar para o Início</button>
+    </div>
+
+    <div id="cadastrar" class="page">
+        <h2>Cadastrar Peixe-Boi</h2>
+        <p>Preencha os dados abaixo para registrar um animal avistado ou resgatado no nosso sistema.</p>
+        
+        <form id="formCadastro">
+            <label for="nome">Nome ou Identificação do Animal:</label>
+            <input type="text" id="nome" required placeholder="Ex: Tico, Fêmea adulta...">
+
+            <label for="especie">Espécie:</label>
+            <select id="especie" required>
+                <option value="">Selecione...</option>
+                <option value="amazonia">Peixe-boi-da-amazônia</option>
+                <option value="marinho">Peixe-boi-marinho</option>
+            </select>
+
+            <label for="local">Local do Avistamento/Resgate:</label>
+            <input type="text" id="local" required placeholder="Ex: Rio Negro, Manaus">
+
+            <label for="status">Estado de Saúde:</label>
+            <textarea id="status" rows="3" required placeholder="Descreva se o animal está machucado, saudável, precisa de prótese..."></textarea>
+
+            <button type="submit">Finalizar Cadastro</button>
+        </form>
+
+        <div id="mensagemSucesso" class="success-msg">
+            ✅ Peixe-boi cadastrado com sucesso no sistema!
+        </div>
+
+        <button class="back-btn" onclick="mudarPagina('home')">Voltar para o Início</button>
+    </div>
+
+    <script>
+        // Função para alternar entre as páginas
+        function mudarPagina(idPaginaAlvo) {
+            // Esconde todas as páginas
+            let paginas = document.querySelectorAll('.page');
+            paginas.forEach(function(pagina) {
+                pagina.classList.remove('active');
+            });
+
+            // Mostra apenas a página que o usuário clicou
+            document.getElementById(idPaginaAlvo).classList.add('active');
+            
+            // Esconde a mensagem de sucesso se ela estiver aparecendo
+            document.getElementById('mensagemSucesso').style.display = 'none';
+        }
+
+        // Função que faz o cadastro funcionar
+        document.getElementById('formCadastro').addEventListener('submit', function(evento) {
+            // Evita que a página recarregue ao clicar em enviar
+            evento.preventDefault(); 
+            
+            // Mostra a mensagem de sucesso
+            document.getElementById('mensagemSucesso').style.display = 'block';
+            
+            // Limpa o formulário para um novo cadastro
+            this.reset();
+        });
+    </script>
+</body>
+</html>
