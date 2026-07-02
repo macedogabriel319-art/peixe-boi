@@ -731,13 +731,13 @@
     if(views.includes(h)) goTo(h);
   });
 
-  // ---------- storage-backed registry ----------
+ // ---------- storage-backed registry ----------
   const STORAGE_KEY = 'cadastros-list';
 
   async function loadCadastros(){
     try{
-      const res = await window.storage.get(STORAGE_KEY, true);
-      return res && res.value ? JSON.parse(res.value) : [];
+      const res = localStorage.getItem(STORAGE_KEY);
+      return res ? JSON.parse(res) : [];
     }catch(e){
       return [];
     }
@@ -745,7 +745,7 @@
 
   async function saveCadastros(list){
     try{
-      await window.storage.set(STORAGE_KEY, JSON.stringify(list), true);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
       return true;
     }catch(e){
       return false;
